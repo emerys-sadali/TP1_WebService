@@ -1,0 +1,5 @@
+avantParam,apresParam
+http://api.weatherstack.com/current?access_key=b9b9d475861f7d519b64689b36a08188&query=,
+https://www.prevision-meteo.ch/services/json/,
+https://api.weatherbit.io/v2.0/current?city=,&country=fr&key=5c745d584bbc4003b16382ad72bb3d96
+
