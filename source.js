@@ -65,7 +65,6 @@ async function getDon2() {
     }
 
     async function getDon(){
-      for(let i=0;i<13;i++){
         let total = 0;
         
         document.getElementById("aff").innerHTML = "";
@@ -82,7 +81,5 @@ async function getDon2() {
         total = total / 3
   
         document.getElementById('aff').append('La température moyenne à '+ document.getElementById('ville').value +' est de '+ Math.round(total * 100) / 100 + ' degrès Celcius')
-
-      }
      
   }
