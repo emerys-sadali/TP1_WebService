@@ -61,3 +61,37 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
       document.getElementById('aff').append('La température moyenne à '+ document.getElementById('ville').value +' est de '+ Math.round(total * 100) / 100 + ' degrès Celcius')
 
   }
+
+  async function inscription(){
+   
+    let user = document.getElementById('iuser').value
+    let mdp = document.getElementById('imdp').value
+    
+   await axios.post('http://localhost:8080/inscrire?user='+ user +'&mdp='+ mdp, {})
+    .then( (res) => {
+      document.location.href = ("/")
+      return res  })
+    .catch((err) => {
+      throw err
+    })
+
+
+  }
+
+  async function connection(){
+   
+    let user = document.getElementById('user').value
+    let mdp = document.getElementById('mdp').value
+    
+   await axios.post('http://localhost:8080/login?user='+ user +'&mdp='+ mdp, {})
+    .then( (res) => {
+      if (res.data.msg == 'ok'){
+        document.location.href = ("/accueil")
+      }
+    })
+    .catch((err) => {
+      throw err
+    })
+
+
+  }
