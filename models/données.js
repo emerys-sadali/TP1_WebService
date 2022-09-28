@@ -1,11 +1,14 @@
 const axios = require('axios').default;
+const sqlite3 = require('sqlite3')
+var jwt = require('jsonwebtoken');
+let dbname = new sqlite3.Database('WebService.db')
 
 class M_Source {
 
 static getInfo1(ville, cb) {
 
     axios.get('https://www.prevision-meteo.ch/services/json/'+ ville, cb, {})
-      .then(function (res) {
+      .then(function (res) {const sqlite3 = require('sqlite3')
         cb(res.data)
       })
       .catch(function (error) {
@@ -13,13 +16,13 @@ static getInfo1(ville, cb) {
       })        
     }
 
-      static getInfo2(ville, cb) {
+  static getInfo2(ville, cb) {
          
-            axios.get('http://api.weatherstack.com/current?access_key=a72c5353b7830d1bdb2ab4a2226c60f2&query='+ ville, cb, {})
-            .then(function (res) {
+        axios.get('http://api.weatherstack.com/current?access_key=a72c5353b7830d1bdb2ab4a2226c60f2&query='+ ville, cb, {})
+          .then(function (res) {
                 cb(res.data)
-            })
-            .catch(function (error) {
+        })
+          .catch(function (error) {
                  cb(error.message)
             })
 
@@ -37,6 +40,30 @@ static getInfo1(ville, cb) {
             })
 
                 
+          }
+
+          static async inscription(userID, userMDP) {
+            try {
+              var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.run(`insert into utilisateur (login, mdp, credit, token) values ("${userID}", "${userMDP}", 10, "${token}")`)
+            } catch (err) {
+                throw (err.message)
+            }
+          }
+          
+          static async connection(userID, userMDP, cb) {
+            let bool = false
+
+            try{
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.all(`select login,mdp, token from utilisateur where login="${userID}" and mdp="${userMDP}"`, (err, rows) => {
+                  cb(rows)
+              })	
+             
+            } catch (err) {
+              throw (err.message)
+            }
           }
 
 }
