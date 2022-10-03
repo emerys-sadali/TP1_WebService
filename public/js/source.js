@@ -33,7 +33,7 @@ async function getDon3() {
 return await axios.get('http://localhost:8080/source3?ville='+ville, {})
   .then((res) => {
     document.getElementById("aff3").innerHTML = ""
-    document.getElementById('aff3').append('La météo à '+ ville +' est de '+ res.data.data[0].app_temp + ' degrès Celcius d\'après Weatherstack')
+    document.getElementById('aff3').append('La météo à '+ ville +' est de '+ res.data.data[0].app_temp + ' degrès Celcius d\'après Weatherbit ')
     return res.data.data[0].app_temp
   })
   .catch((err) => {

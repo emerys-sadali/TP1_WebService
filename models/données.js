@@ -15,7 +15,7 @@ static getInfo1(ville, cb) {
 
       static getInfo2(ville, cb) {
          
-            axios.get('http://api.weatherstack.com/current?access_key=a72c5353b7830d1bdb2ab4a2226c60f2&query='+ ville, cb, {})
+            axios.get('http://api.weatherstack.com/current?access_key=b740540da775cb6b705327d3bba62b5b&query='+ ville, cb, {})
             .then(function (res) {
                 cb(res.data)
             })
@@ -28,7 +28,7 @@ static getInfo1(ville, cb) {
 
         static getInfo3(ville, cb) {
          
-                axios.get('https://api.weatherbit.io/v2.0/current?city='+ ville +'&country=fr&key=5c745d584bbc4003b16382ad72bb3d96', cb, {})
+                axios.get('https://api.weatherbit.io/v2.0/current?city='+ ville +'&country=fr&key=7b4f81e6011c4efa8fd6903d52c7a88e', cb, {})
             .then(function (res) {
                 cb(res.data)
             })
