@@ -1,3 +1,6 @@
+getCredit()
+getToken()
+
 async function getDon1() {
 
 let ville = document.getElementById('ville').value
@@ -33,20 +36,39 @@ async function getDon3() {
 return await axios.get('http://localhost:8080/source3?ville='+ville, {})
   .then((res) => {
     document.getElementById("aff3").innerHTML = ""
-    document.getElementById('aff3').append('La météo à '+ ville +' est de '+ res.data.data[0].app_temp + ' degrès Celcius d\'après Weatherstack')
+    document.getElementById('aff3').append('La météo à '+ ville +' est de '+ res.data.data[0].app_temp + ' degrès Celcius d\'après Weatherbit')
     return res.data.data[0].app_temp
   })
   .catch((err) => {
     throw err
   })
 }
-    
    
     async function getDon(){
- 
+      let ville = document.getElementById('ville').value
+      if(ville == ""){
+        document.getElementById('aff').innerHTML = 'Saisissez une ville !'
+        document.getElementById('aff2').innerHTML = ''
+        document.getElementById('aff3').innerHTML = ''
+      } else {
+      let credit = await getCredit()
+      if(credit<0.5 ){
+        document.getElementById('aff').innerHTML = 'Crédit insuffisant !'
+        document.getElementById('aff1').innerHTML = ''
+        document.getElementById('aff2').innerHTML = ''
+        document.getElementById('aff3').innerHTML = ''
+        
+      } else {
+
+      await subCredit()
+      await getCredit().then(res => {
+        document.getElementById('credit').innerHTML = 'Votre crédit est de '+res +' €'
+      })
+
       let total = 0
       
       document.getElementById("aff").innerHTML = ""
+
       await getDon1().then((res) => {
         total = total + res
       })
@@ -56,10 +78,12 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
       await getDon3().then((res) => {
         total = total + res
       })
-
+      
+      
       total = total / 3
-      document.getElementById('aff').append('La température moyenne à '+ document.getElementById('ville').value +' est de '+ Math.round(total * 100) / 100 + ' degrès Celcius')
-
+      document.getElementById('aff').innerHTML = 'La température moyenne à '+ document.getElementById('ville').value +' est de '+ Math.round(total * 100) / 100 + ' degrès Celcius'
+    }
+  }
   }
 
   async function inscription(){
@@ -79,7 +103,7 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
   }
 
   async function connection(){
-   
+    getToken()
     let user = document.getElementById('user').value
     let mdp = document.getElementById('mdp').value
     
@@ -93,5 +117,33 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
       throw err
     })
 
+  }
 
+    async function getCredit(){
+      
+    return await axios.get('http://localhost:8080/getCredit', {})
+      .then( (res) => {
+        document.getElementById('credit').innerHTML = 'Votre crédit est de '+ res.data[0].credit+' €'
+        return res.data[0].credit
+      })
+      .catch((err) => {
+        throw err
+      })
+    }
+
+      async function getToken(){
+      
+        return await axios.get('http://localhost:8080/getToken', {})
+          .then( (res) => {
+            document.getElementById('token').innerHTML = 'Votre token est : '+ res.data[0].token
+            return res.data[0].token
+          })
+          .catch((err) => {
+            throw err
+          })
+
+
+  }
+  async function subCredit(){
+  await axios.post('http://localhost:8080/subCredit', {})
   }

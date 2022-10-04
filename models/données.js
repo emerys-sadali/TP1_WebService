@@ -53,11 +53,48 @@ static getInfo1(ville, cb) {
           }
           
           static async connection(userID, userMDP, cb) {
-            let bool = false
 
             try{
               dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
               dbname.all(`select login,mdp, token from utilisateur where login="${userID}" and mdp="${userMDP}"`, (err, rows) => {
+                  cb(rows)
+              })	
+             
+            } catch (err) {
+              throw (err.message)
+            }
+          }
+
+          static async getCredit(token, cb){
+
+            try{
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.all(`select credit from utilisateur where token="${token}"`, (err, rows) => {
+                  cb(rows)
+              })	
+             
+            } catch (err) {
+              throw (err.message)
+            }
+          }
+
+
+          static async updateCredit(token){
+
+            try{
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.all(`update utilisateur set credit=credit-0.5 where token="${token}" `, (err, rows) => {})	
+             
+            } catch (err) {
+              throw (err.message)
+            }
+          }
+
+          static async getToken(user, cb){
+
+            try{
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.all(`select token from utilisateur where login="${user}"`, (err, rows) => {
                   cb(rows)
               })	
              

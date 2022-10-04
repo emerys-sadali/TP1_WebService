@@ -6,6 +6,7 @@ var routes = require('./controller/controller')
 var cors = require('cors')
 const sqlite3 = require('sqlite3')
 const axios = require('axios').default;
+const session = require('express-session');
 
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public', {dotfiles: 'allow'}))
@@ -16,6 +17,14 @@ app.use('/js', express.static('public'))
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({extended: true})) // for parsing application/x-www-form-urlencoded
+
+app.use(session({
+    secret: 'tpwebservice',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false}
+
+}))
 
 app.use('/', routes)
 app.use(cors())

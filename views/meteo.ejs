@@ -1,13 +1,20 @@
 <%- include ('./header') %>
 <body>	
-
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 	
 	<div class="test">
-
+		<div id="token" style="margin-bottom: 20px;">
+		
+		</div>
+	<form>
 		<h1>Saisissez une ville pour afficher sa température</h1>
-		<input id='ville' name="ville" value="Saissisez une ville">
-		<input onclick='getDon()' id='btn' type="button" value="Valider">
+		<h2 id="credit">
+
+		</h2>
+		
+		<input id='ville' name="ville" placeholder="Saissisez une ville" required="required">
+		<input onclick='getDon()'  id='btn' type="button" value="Valider">
+	</form>
 		<div class="rep">
 			<div id="aff1">
 
@@ -23,6 +30,9 @@
 
 			<div id="aff">
 		</div>
+
+		
+
 	</div>
 
 </div>
