@@ -47,7 +47,7 @@ app.get('/apimeteo', (req, res) => {
     let token = req.query.token
     let don = require('../models/données')
     don.getCredit(token, cb7 => {
-        if (cb7 < 0.5){
+        if (cb7[0].credit < 0.5){
             res.json('Token erroné ou crédit insuffisant')
         } else {
     don.updateCredit(token)
