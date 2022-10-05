@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+const axios = require('axios')
 const sqlite3 = require('sqlite3')
 var jwt = require('jsonwebtoken');
 let dbname = new sqlite3.Database('WebService.db')
