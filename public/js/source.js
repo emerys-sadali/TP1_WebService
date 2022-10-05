@@ -1,3 +1,4 @@
+
 getCredit()
 getToken()
 
@@ -146,4 +147,11 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
   }
   async function subCredit(){
   await axios.post('http://localhost:8080/subCredit', {})
+  }
+
+  async function deconnexion(){
+    await axios.post('http://localhost:8080/deconnexion',{})
+    .then((res)=>{
+      document.location.href = ("/")
+    })
   }

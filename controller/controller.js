@@ -122,5 +122,12 @@ app.post('/login', (req,res) => {
         res.json("Soustraction effectuée")
     })
 
+    app.post('/deconnexion', (req,res) => {
 
+        req.session.userID = undefined
+        req.session.userMDp = undefined
+        req.session.token = undefined
+        res.redirect("/")
+    })
+        
 module.exports = app
