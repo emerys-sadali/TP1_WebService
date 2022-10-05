@@ -90,6 +90,18 @@ static getInfo1(ville, cb) {
             }
           }
 
+          static async addCredit(token, nombre){
+
+            try{
+              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
+              dbname.all(`update utilisateur set credit=credit+"${nombre}" where token="${token}" `, (err, rows) => {})	
+              console.log(nombre)
+              console.log(token)
+            } catch (err) {
+              throw (err.message)
+            }
+          }
+
           static async getToken(user, cb){
 
             try{

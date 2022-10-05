@@ -155,3 +155,12 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
       document.location.href = ("/")
     })
   }
+
+  async function addCredit(){
+    let nombre = document.getElementById('rech').value
+    await axios.post('http://localhost:8080/addCredit?nombre='+nombre,{})
+    .then((res)=>{
+      document.location.href = ("/accueil")
+    })
+   
+  }

@@ -129,5 +129,11 @@ app.post('/login', (req,res) => {
         req.session.token = undefined
         res.redirect("/")
     })
+
+    app.post('/addCredit', (req, res) => {
+        let don = require('../models/données')
+        don.addCredit(req.session.token, req.query.nombre)
+        res.json("Ajout effectué")
+    }) 
         
 module.exports = app

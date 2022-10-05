@@ -3,6 +3,7 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
+    "@paypal/paypal-js": "^5.1.1",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "cors": "^2.8.5",
