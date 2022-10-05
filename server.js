@@ -7,7 +7,6 @@ var cors = require('cors')
 const sqlite3 = require('sqlite3')
 const axios = require('axios').default;
 const session = require('express-session');
-
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public', {dotfiles: 'allow'}))
 
@@ -36,6 +35,6 @@ http.createServer(app).listen(httpport, 'localhost', function() {
 
 let dbname = new sqlite3.Database('WebService.db')
 dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
-
+dbname.run("CREATE TABLE IF NOT EXISTS Transactions (id_t	INTEGER PRIMARY KEY AUTOINCREMENT,type	TEXT NOT NULL,date	TEXT NOT NULL,montant	REAL NOT NULL,id_user	INTEGER NOT NULL,FOREIGN KEY(id_user) REFERENCES utilisateur(id))")
 
 

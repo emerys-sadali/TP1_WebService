@@ -93,7 +93,8 @@ app.post('/login', (req,res) => {
                 req.session.userID = row.login
                 req.session.userMDp = row.mdp
                 req.session.token = row.token
-                return res.json({"msg": "ok", "token": row.token})
+                req.session.identifiant = row.id
+                res.json({"msg": "ok", "token": row.token})
         } 
     })
     })
@@ -111,14 +112,20 @@ app.post('/login', (req,res) => {
        
         let don = require('../models/données')
         don.getToken(req.session.userID, cb => {
-            console.log(cb)
             res.json(cb)
         })
     })
-
+    app.get('/getTransactions', (req, res) => {
+       
+        let don = require('../models/données')
+        don.getTransactions(req.session.identifiant, cb => {
+            res.json(cb)
+        })
+    })
     app.post('/subCredit', (req, res) => {
         let don = require('../models/données')
-        don.updateCredit(req.session.token)
+        console.log(req.session)
+        don.updateCredit(req.session.token, req.session.identifiant)
         res.json("Soustraction effectuée")
     })
 
@@ -127,12 +134,13 @@ app.post('/login', (req,res) => {
         req.session.userID = undefined
         req.session.userMDp = undefined
         req.session.token = undefined
+        req.session.identifiant = undefined
         res.redirect("/")
     })
 
     app.post('/addCredit', (req, res) => {
         let don = require('../models/données')
-        don.addCredit(req.session.token, req.query.nombre)
+        don.addCredit(req.session.token, req.query.nombre, req.session.identifiant)
         res.json("Ajout effectué")
     }) 
         

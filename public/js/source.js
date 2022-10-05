@@ -1,4 +1,5 @@
 
+
 getCredit()
 getToken()
 
@@ -144,7 +145,46 @@ return await axios.get('http://localhost:8080/source3?ville='+ville, {})
           })
 
 
-  }
+      }
+      async function getTransactions(){
+        const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+          
+        // Passing the column names intp the module
+        const csvWriter = createCsvWriter({
+          
+          // Output csv file name is geek_data
+          path: 'transactions.csv',
+          header: [
+          
+            // Title of the columns (column_names)
+            {id: 'id', title: 'ID'},
+            {id: 'type', title: 'TYPE'},
+            {id: 'date', title: 'DATE'},
+            {id: 'montant', title: 'MONTANT'},
+            {id: 'id_user', title: 'ID_USER'}
+
+
+          ]
+        });
+          
+
+        
+        // Writerecords function to add records
+        
+        await axios.get('http://localhost:8080/getTransactions', {})
+          .then( (res) => {
+            csvWriter
+            .writeRecords(res.data)
+            .then(()=> console.log('Data uploaded into csv successfully'));
+            // document.getElementById('transactions').innerHTML = 'Votre token est : '+ res.data[0].token
+              return 
+            })
+          .catch((err) => {
+            throw err
+          })
+
+
+      }
   async function subCredit(){
   await axios.post('http://localhost:8080/subCredit', {})
   }
