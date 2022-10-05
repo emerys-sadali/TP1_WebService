@@ -58,7 +58,7 @@ app.get('/apimeteo', (req, res) => {
             don.getInfo3(ville, cb3 => {
                total = total + cb3.data[0].app_temp
                total = total / 3
-               res.json( Math.round(total * 100) / 100)
+               res.json({temperature: Math.round(total * 100) / 100})
         })
     })
 

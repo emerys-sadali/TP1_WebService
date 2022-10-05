@@ -8,7 +8,7 @@ class M_Source {
 static getInfo1(ville, cb) {
 
     axios.get('https://www.prevision-meteo.ch/services/json/'+ ville, cb, {})
-      .then(function (res) {const sqlite3 = require('sqlite3')
+      .then(function (res) {
         cb(res.data)
       })
       .catch(function (error) {
@@ -95,8 +95,6 @@ static getInfo1(ville, cb) {
             try{
               dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
               dbname.all(`update utilisateur set credit=credit+"${nombre}" where token="${token}" `, (err, rows) => {})	
-              console.log(nombre)
-              console.log(token)
             } catch (err) {
               throw (err.message)
             }
