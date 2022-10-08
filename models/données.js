@@ -57,7 +57,6 @@ static getInfo1(ville, cb) {
             try{
               dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
               dbname.all(`select id, login, mdp, token from utilisateur where login="${userID}" and mdp="${userMDP}"`, (err, rows) => {
-                  console.log(rows)
                   cb(rows)
               })	
              
@@ -85,7 +84,7 @@ static getInfo1(ville, cb) {
             try{
               dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
               dbname.all(`update utilisateur set credit=credit-0.5 where token="${token}" `, (err, rows) => {})	
-              dbname.all(`insert into Transactions (id_t, type, date, montant, id_user) values (NULL, 'Consommation', CURRENT_TIMESTAMP, 0.5, "${id_user}")`)
+              dbname.all(`insert into Transactions (id_t, type, date, montant, id_user) values (NULL, 'Consommation', DateTime('now', 'localtime'), 0.5, "${id_user}")`)
              
             } catch (err) {
               throw (err.message)
@@ -97,7 +96,7 @@ static getInfo1(ville, cb) {
             try{
               dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
               dbname.all(`update utilisateur set credit=credit+"${nombre}" where token="${token}" `)
-              dbname.all(`insert into Transactions (id_t, type, date, montant, id_user) values (NULL, 'Ajout', CURRENT_TIMESTAMP, "${nombre}", "${id_user}")`)
+              dbname.all(`insert into Transactions (id_t, type, date, montant, id_user) values (NULL, 'Ajout', DateTime('now', 'localtime'), "${nombre}", "${id_user}")`)
 
             } catch (err) {
               throw (err.message)
@@ -116,17 +115,7 @@ static getInfo1(ville, cb) {
               throw (err.message)
             }
           }
-          static async getTransactions(id, cb){
-            try{
-              dbname.run("CREATE TABLE IF NOT EXISTS utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, mdp TEXT NOT NULL, credit REAL, token TEXT NOT NULL)")
-              dbname.all(`select type, date, montant from Transactions where id_user="${id}"`, (err, rows) => {
-                  cb(rows)
-              })	
-             
-            } catch (err) {
-              throw (err.message)
-            }
-          }
+         
 }         
 
 module.exports = M_Source

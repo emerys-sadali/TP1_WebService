@@ -1,5 +1,9 @@
 let express = require('express')
 let app = express()
+const sqlite3 = require('sqlite3')
+const fs = require("fs");
+const { stringify } = require("csv-stringify");
+let dbname = new sqlite3.Database('WebService.db')
 
 app.get('/accueil', (req, res) => {
     if(req.session.token == undefined) {
@@ -108,6 +112,28 @@ app.post('/login', (req,res) => {
         })
     })
 
+    app.get('/getTransactions', (req, res) => {
+        const filename = "Transactions/Transactions_"+req.session.userID+".csv";
+        const writableStream = fs.createWriteStream(filename);
+        const columns = [
+        "id_t",
+        "type",
+        "date",
+        "montant",
+        "id_user",
+        ];
+        
+        const stringifier = stringify({ header: true, columns: columns });
+        dbname.each(`select * from Transactions where id_user="${req.session.identifiant}"`, (error, row) => {
+        if (error) {
+            return error.message;
+        }
+        stringifier.write(row);
+        });
+        stringifier.pipe(writableStream); 
+        res.json("L'ensemble de vos transactions ont été exportées au format csv, disponibles dans le fichier Transactions/Transactions_"+ req.session.userID +" du projet \n\n\nPS: pensez à actualiser le projet sur VSCode s'il le fichier n'est pas visible immédiatement")  
+    })        
+
     app.get('/getToken', (req, res) => {
        
         let don = require('../models/données')
@@ -115,16 +141,9 @@ app.post('/login', (req,res) => {
             res.json(cb)
         })
     })
-    app.get('/getTransactions', (req, res) => {
-       
-        let don = require('../models/données')
-        don.getTransactions(req.session.identifiant, cb => {
-            res.json(cb)
-        })
-    })
+    
     app.post('/subCredit', (req, res) => {
         let don = require('../models/données')
-        console.log(req.session)
         don.updateCredit(req.session.token, req.session.identifiant)
         res.json("Soustraction effectuée")
     })
@@ -143,5 +162,7 @@ app.post('/login', (req,res) => {
         don.addCredit(req.session.token, req.query.nombre, req.session.identifiant)
         res.json("Ajout effectué")
     }) 
+
+    
         
 module.exports = app

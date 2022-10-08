@@ -1,0 +1,10 @@
+id_t,type,date,montant,id_user
+23,Consommation,2022-10-08 12:21:29,0.5,2
+24,Consommation,2022-10-08 12:21:29,0.5,2
+25,Consommation,2022-10-08 12:21:30,0.5,2
+26,Consommation,2022-10-08 12:21:31,0.5,2
+27,Consommation,2022-10-08 12:21:31,0.5,2
+28,Ajout,2022-10-08 12:21:35,40,2
+29,Consommation,2022-10-08 13:59:49,0.5,2
+30,Consommation,2022-10-08 14:05:53,0.5,2
+31,Consommation,2022-10-08 16:07:11,0.5,2
